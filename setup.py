@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 setup(
-    name="MTGAPI",
+    name="kartotek",
     version="0.0.1",
     packages=find_packages(),
     install_requires=[
@@ -12,9 +12,9 @@ setup(
     license="MIT",
     entry_points={
         'console_scripts': [
-            "api=mtgapi:api",
-            "load_csv=mtgapi:csv",
-            "load_cards=mtgapi:cards"
+            "api=kartotek:api",
+            "load_csv=kartotek:csv",
+            "load_cards=kartotek:cards"
         ]
     }
 )

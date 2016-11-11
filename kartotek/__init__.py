@@ -1,13 +1,14 @@
-from mtgapi.app import app
+
 from wsgiref.simple_server import make_server
 from logging import getLogger
 from argparse import ArgumentParser
 from csv import DictReader
 
-from mtgapi.util import Translator
-from mtgapi.util import MTGJSONReader
-from mtgapi.db import Database
-from mtgapi.config import config
+from kartotek.app import app
+from kartotek.util import Translator
+from kartotek.util import MTGJSONReader
+from kartotek.db import Database
+from kartotek.config import config
 
 def api():
     logger = getLogger('api')

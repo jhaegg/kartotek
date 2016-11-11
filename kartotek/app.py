@@ -1,7 +1,7 @@
 import json
 from falcon import API
 
-from mtgapi.db import Database
+from kartotek.db import Database
 
 
 _db = Database()

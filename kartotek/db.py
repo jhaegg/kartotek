@@ -1,7 +1,7 @@
 import sqlite3
 from yoyo import read_migrations, get_backend
 
-from mtgapi.config import config
+from kartotek.config import config
 
 def _load_database():
     backend = get_backend("sqlite:///%s" % config['db_file'])

@@ -1,0 +1,6 @@
+.env
+*.pyc
+*.egg-info
+cards/
+sets/
+config/config.json

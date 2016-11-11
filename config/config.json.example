@@ -1,0 +1,5 @@
+{
+  "db_file": "collection.db",
+  "api_port": 5000,
+  "api_bind": "127.0.0.1"
+}

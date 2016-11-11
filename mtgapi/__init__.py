@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 from csv import DictReader
 
 from mtgapi.util import Translator
+from mtgapi.util import MTGJSONReader
 from mtgapi.db import Database
 from mtgapi.config import config
 
@@ -37,3 +38,15 @@ def csv():
 
     with open(args.file[0], 'r') as csv_file:
         Database().set_have_cards(translator(DictReader(csv_file)))
+
+def cards():
+    logger = getLogger('cards')
+    parser = ArgumentParser(description="Load card definition JSON into DB")
+    parser.add_argument('file',
+                        type=str,
+                        nargs=1,
+                        help="JSON to load")
+    args = parser.parse_args()
+    reader = MTGJSONReader(args.file[0])
+    set_id = Database().set_set(reader.set())
+    Database().set_cards(reader.cards(set_id))

@@ -11,6 +11,10 @@ setup(
     author_email="johan.hagg@shard.se",
     license="MIT",
     entry_points={
-        'console_scripts': ["api=mtgapi:api", "load_csv=mtgapi:csv"]
+        'console_scripts': [
+            "api=mtgapi:api",
+            "load_csv=mtgapi:csv",
+            "load_cards=mtgapi:cards"
+        ]
     }
 )

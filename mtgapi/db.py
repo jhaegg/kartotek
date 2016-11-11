@@ -24,10 +24,36 @@ class Database:
         with self._db as cursor:
             cursor.executemany(
                 """INSERT OR REPLACE INTO have
-                   ('gatherer_id', 'num_regular', 'num_foil')
-                   VALUES (:gatherer_id, :num_regular, :num_foil);""", cards)
+                   ('mvid', 'num_regular', 'num_foil')
+                   VALUES (:mvid, :num_regular, :num_foil);""", cards)
 
     def get_have_cards(self):
         cursor = self._db.cursor()
-        cursor.execute("SELECT * FROM have WHERE 1;")
+        cursor.execute("""
+            SELECT card.mvid        AS mvid,
+                   card.name        AS name,
+                   card.rarity      AS ratity,
+                   have.num_regular AS num_regular,
+                   have.num_foil    AS num_foil
+            FROM have
+            INNER JOIN cards AS card
+                ON have.mvid = card.mvid
+            WHERE 1;""")
+
         yield from cursor
+
+    def set_set(self, set):
+        cursor = self._db.cursor()
+        cursor.execute(
+            """INSERT OR REPLACE INTO sets
+               ('code', 'name')
+               VALUES (:code, :name);""", set)
+
+        return cursor.lastrowid
+
+    def set_cards(self, cards):
+        with self._db as cursor:
+            cursor.executemany(
+                """INSERT OR REPLACE INTO cards
+                   ('mvid', 'set_id', 'name', 'printed', 'oracle', 'cost', 'cmc', 'rarity')
+                   VALUES(:mvid, :set_id, :name, :printed, :oracle, :cost, :cmc, :rarity);""", cards)

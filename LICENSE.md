@@ -23,3 +23,4 @@ SOFTWARE.
 Arcane Kartotek uses the following external libraries, which have their own license:
 - [yoyo-migrations](https://bitbucket.org/ollyc/yoyo) [Apache 2.0]
 - [falcon](https://falconframework.org/) [Apache 2.0]
+- [scrypt](http://bitbucket.org/mhallin/py-scrypt) [BSD]

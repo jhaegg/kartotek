@@ -5,7 +5,8 @@ setup(
     packages=find_packages(),
     install_requires=[
         'falcon',
-        'yoyo-migrations'
+        'yoyo-migrations',
+        'scrypt'
     ],
     author="Johan Hägg",
     author_email="johan.hagg@shard.se",

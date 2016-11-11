@@ -27,7 +27,7 @@ class Database:
                    ('mvid', 'num_regular', 'num_foil')
                    VALUES (:mvid, :num_regular, :num_foil);""", cards)
 
-    def get_have_cards(self):
+    def get_have_cards(self, user_id):
         cursor = self._db.cursor()
         cursor.execute("""
             SELECT card.mvid        AS mvid,
@@ -38,7 +38,7 @@ class Database:
             FROM have
             INNER JOIN cards AS card
                 ON have.mvid = card.mvid
-            WHERE 1;""")
+            WHERE have.user_id = ?;""", user_id)
 
         yield from cursor
 
@@ -56,4 +56,11 @@ class Database:
             cursor.executemany(
                 """INSERT OR REPLACE INTO cards
                    ('mvid', 'set_id', 'name', 'printed', 'oracle', 'cost', 'cmc', 'rarity')
-                   VALUES(:mvid, :set_id, :name, :printed, :oracle, :cost, :cmc, :rarity);""", cards)
+                   VALUES (:mvid, :set_id, :name, :printed, :oracle, :cost, :cmc, :rarity);""", cards)
+
+    def add_user(self, username, salt, password):
+        cursor = self._db.cursor()
+        cursor.execute(
+            """INSERT INTO users ('username', 'password_salt', 'password_hash')
+               VALUES (?, ?, ?);""", (username, salt, password))
+        return cursor.lastrowid

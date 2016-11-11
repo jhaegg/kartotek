@@ -1,4 +1,8 @@
+import scrypt
 from json import load
+from os import urandom
+
+from kartotek.config import config
 
 class Translator:
     def __init__(self, translation):
@@ -36,3 +40,9 @@ class MTGJSONReader:
                 'cmc': card.get('cmc', 0),
                 'rarity': card['rarity']
             }
+
+
+def new_password(password):
+    salt = urandom(256)
+    full_salt = salt + config['password_secret'].encode('utf-8')
+    return (salt, scrypt.hash(password, full_salt))

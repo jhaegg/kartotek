@@ -28,6 +28,11 @@ def csv():
                         type=str,
                         help="Field mapping",
                         required=True)
+    parser.add_argument('--user',
+                        dest='user',
+                        type=int,
+                        help="User id",
+                        required=True)
     parser.add_argument('file',
                         type=str,
                         nargs=1,
@@ -38,7 +43,7 @@ def csv():
     translator = Translator(args.translation)
 
     with open(args.file[0], 'r') as csv_file:
-        Database().set_have_cards(translator(DictReader(csv_file)))
+        Database().set_have_cards(args.user, translator(DictReader(csv_file)))
 
 def cards():
     logger = getLogger('cards')

@@ -20,12 +20,13 @@ class Database:
         if not hasattr(self, '_db'):
             self._db = _load_database()
 
-    def set_have_cards(self, cards):
+    def set_have_cards(self, user_id, cards):
         with self._db as cursor:
+            # Note that user_id is not escaped, safe since integer only
             cursor.executemany(
                 """INSERT OR REPLACE INTO have
-                   ('mvid', 'num_regular', 'num_foil')
-                   VALUES (:mvid, :num_regular, :num_foil);""", cards)
+                   ('user_id', 'mvid', 'num_regular', 'num_foil')
+                   VALUES (%d, :mvid, :num_regular, :num_foil);""" % user_id, cards)
 
     def get_have_cards(self, user_id):
         cursor = self._db.cursor()

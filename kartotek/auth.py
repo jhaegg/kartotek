@@ -45,3 +45,5 @@ class AuthMiddleware:
 
         if not verify_password(password, credentials['password_salt'], credentials['password_hash']):
             raise falcon.HTTPUnauthorized()
+
+        req.user_id = credentials['user_id']

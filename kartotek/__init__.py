@@ -40,7 +40,7 @@ def csv():
 
     args = parser.parse_args()
 
-    translator = Translator(args.translation)
+    translator = Translator.from_file(args.translation)
 
     with open(args.file[0], 'r') as csv_file:
         Database().set_have_cards(args.user, translator(DictReader(csv_file)))

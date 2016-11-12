@@ -68,5 +68,6 @@ class Database:
         return cursor.lastrowid
 
     def get_credentials(self, username):
-        cursor = self._db.execute("SELECT password_salt, password_hash FROM users WHERE username = ?;", (username, ))
+        cursor = self._db.execute(
+            "SELECT user_id, password_salt, password_hash FROM users WHERE username = ?;", (username, ))
         return cursor.fetchone()

@@ -49,7 +49,7 @@ class Database:
             """INSERT OR REPLACE INTO sets
                ('code', 'name')
                VALUES (:code, :name);""", set)
-
+        self._db.commit()
         return cursor.lastrowid
 
     def set_cards(self, cards):
@@ -64,4 +64,9 @@ class Database:
         cursor.execute(
             """INSERT INTO users ('username', 'password_salt', 'password_hash')
                VALUES (?, ?, ?);""", (username, salt, password))
+        self._db.commit()
         return cursor.lastrowid
+
+    def get_credentials(self, username):
+        cursor = self._db.execute("SELECT password_salt, password_hash FROM users WHERE username = ?;", (username, ))
+        return cursor.fetchone()

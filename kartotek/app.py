@@ -2,8 +2,7 @@ import json
 from falcon import API
 
 from kartotek.db import Database
-from kartotek.util import new_password
-
+from kartotek.auth import new_password, auth, AuthMiddleware
 
 _db = Database()
 
@@ -18,6 +17,6 @@ class UsersResource:
         resp.body = json.dumps({'user_id': user_id})
 
 
-app = API()
+app = API(middleware=[AuthMiddleware()])
 app.add_route('/have/{user_id}', HaveResource())
 app.add_route('/user', UsersResource())
